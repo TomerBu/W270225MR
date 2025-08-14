@@ -1,18 +1,7 @@
-fruit = ['apple', 'mango','banana', 'kiwi', 'orange', 'grape']
+numbers = [1, 2, 3, 50, 300, 5]
 
-# start defaults to 0
-# first 2 elements
-print(fruit[:2]) 
+#shallow copy
+numbers2 = numbers[:]
 
-
-# stop defaults to the len(lst)
-# items from index 2 to the end!!!!
-
-print(fruit[2:])
-
-
-
-# all the items but the last one:
-print(fruit[:-1])
-
-
+#shallow copy
+numbers2 = numbers.copy()
