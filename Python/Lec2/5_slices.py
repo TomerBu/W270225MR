@@ -6,5 +6,6 @@ print(fruit[:2])
 
 
 # stop defaults to the len(lst)
-# items from index 2 to the end
+# items from index 2 to the end!!!!
+
 print(fruit[2:])
