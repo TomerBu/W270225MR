@@ -9,3 +9,10 @@ print(fruit[:2])
 # items from index 2 to the end!!!!
 
 print(fruit[2:])
+
+
+
+# all the items but the last one:
+print(fruit[:-1])
+
+
