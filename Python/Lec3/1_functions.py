@@ -1,14 +1,14 @@
-def say_hello():
+def say_hello(name):
     print("🌈")
-    print(f"Hello!")
-
-def say_goodbye():
-    print(f"Goodbye!")
-    print("🌈")
+    print(f"Hello, {name}!")
 
 
+say_hello("Alice")
+say_hello("Bob")
+say_hello("Joe")
 
-say_hello()
-say_hello()
-say_hello()
-say_hello()
+
+def rating(rate):
+    return "🌟" * rate
+
+print(rating(5))
