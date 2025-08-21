@@ -107,6 +107,28 @@ INSTALLED_APPS = [
 ```
 
 
+## נערוך את הקובץ views.py בתיקיה של האפליקציה
+```bash
+from django.http import HttpResponse
+
+def all(request):
+    return HttpResponse("all")
+
+def me(request):
+    return HttpResponse("me")
+```
+
+## ניצור קובץ חדש בשם urls.py בתיקיה של האפליקציה
+```bash
+from django.urls import path
+from students.views import all, me
+
+urlpatterns = [
+    path('all/', all, name='all'),
+    path('me/', me, name='me'),
+]
+```
+
 ### הרצת מיגרציות
 ```bash
 python manage.py makemigrations
