@@ -93,6 +93,20 @@ python manage.py runserver
 python manage.py startapp שם_האפליקציה
 ```
 
+## נוסיף לקובץ settings.py את שם האפליקציה
+```bash
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'students'
+]
+```
+
+
 ### הרצת מיגרציות
 ```bash
 python manage.py makemigrations
