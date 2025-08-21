@@ -1,6 +1,35 @@
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render
+
 names = ['Dani', 'Alice', 'Bob']
+
+def list_html(request):
+
+    return render(request, 'students/list.html', {'names': names})
+
+def add_html(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        if name:
+            names.append(name)
+        return HttpResponseRedirect('/students/list')
+    
+
+    return render(request, 'students/add.html')
+
+def edit_html(request):
+    return render(request, 'students/edit.html')
+
+
+
+
+
+
+
+
+
+
 
 
 def all(request):
