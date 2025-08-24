@@ -31,8 +31,8 @@ cd שם_הפרויקט
 
 **דוגמה:**
 ```bash
-django-admin startproject my_blog
-cd my_blog
+django-admin startproject שם_הפרויקט
+cd שם_הפרויקט
 ```
 
 ### 2. יצירת סביבה וירטואלית (venv)
@@ -193,4 +193,21 @@ pip install django
 
 # הרצת השרת
 python manage.py runserver
+```
+
+
+---
+
+## הקפאה ושחזור של ספריות (requirements)
+
+### הקפאת הספריות לקובץ requirements.txt
+כדי לשמור את כל הספריות המותקנות בסביבה הוירטואלית, השתמש בפקודה:
+```bash
+pip freeze > requirements.txt
+```
+
+### התקנת הספריות מסביבת requirements.txt
+כדי לשחזר את כל הספריות בפרויקט חדש או במחשב אחר:
+```bash
+pip install -r requirements.txt
 ```
