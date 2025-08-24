@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quotes</title>
+  </head>
+  <body>
+    <h1>Quotes List</h1>
+    <table>
+      <tr>
+        <th>Quote</th>
+        <th>Author</th>
+        <th>Year</th>
+      </tr>
+
+      {% for quote in quotes %}
+        <tr>
+            <td>{{quote.quote}}</td>
+            <td>{{quote.author}}</td>
+            <td>{{quote.year}}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
