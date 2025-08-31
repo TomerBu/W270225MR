@@ -5,5 +5,6 @@ from quotes.urls import urlpatterns as quote_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('quotes/', include(quote_patterns))
+    path('quotes/', include(quote_patterns)),
+    path('api/', include('api.urls'))
 ]
