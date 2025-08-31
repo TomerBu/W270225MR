@@ -26,7 +26,7 @@ class Category(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name
+        return f"{self.id} - {self.name}"
 
 
 class Product(models.Model):
@@ -37,6 +37,15 @@ class Product(models.Model):
     # Foreign key = OneToMany
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+    
+
+class Supplier(models.Model):
+    name = models.CharField(max_length=100)
+    contact_email = models.EmailField()
+    stores = models.ManyToManyField(Store)
 
     def __str__(self):
         return self.name
