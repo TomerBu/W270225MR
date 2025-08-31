@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from api.models import Address, Store
+from api.models import Address, Store, Category, Product
 
 # Register your models here.
-admin.site.register([Address, Store])
+admin.site.register([Address, Store, Category, Product])
 
 
 """
