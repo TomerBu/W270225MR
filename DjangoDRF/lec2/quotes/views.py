@@ -9,36 +9,42 @@ def get_quotes(req):
     return render(req, 'quotes/list.html', {'quotes': quotes})
 
 
-# TODO: add 404 if quote not found
 def delete_quote(req: HttpRequest, id):
-  quote = Quote.objects.get(id=id)
-  quote.delete()
-  return redirect('/quotes/')
 
-# TODO: add 404 if quote not found
+    try:
+        quote = Quote.objects.get(id=id)
+        quote.delete()
+        return redirect('/quotes/')
+    except Quote.DoesNotExist:
+        return render(req, 'quotes/404.html', status=404)
+
+
 def edit_quote(req: HttpRequest, id):
-   quote = Quote.objects.get(id=id)
+    try:
+        quote = Quote.objects.get(id=id)
 
-   if req.method == "GET":
-      return render(req, "quotes/edit.html", {"quote": quote})
+        if req.method == "GET":
+            return render(req, "quotes/edit.html", {"quote": quote})
 
-   quote.author = req.POST.get('author', quote.author)
-   quote.quote = req.POST.get('quote', quote.quote)
-   quote.year = req.POST.get('year', quote.year)
-   quote.save()
-   return redirect('/quotes/')
+        quote.author = req.POST.get('author', quote.author)
+        quote.quote = req.POST.get('quote', quote.quote)
+        quote.year = req.POST.get('year', quote.year)
+        quote.save()
+        return redirect('/quotes/')
+    except Quote.DoesNotExist:
+        return render(req, 'quotes/404.html', status=404)
 
 
 def add_quote(req: HttpRequest):
     if req.method == "GET":
-      return render(req, "quotes/add.html")
-    
+        return render(req, "quotes/add.html")
+
     # ניקח את המידע מהטופס - וניצור קווט חדש ונשמור!
     author = req.POST.get('author')
     quote = req.POST.get('quote')
     year = req.POST.get('year')
 
-    q = Quote(quote = quote, author = author, year = year)
+    q = Quote(quote=quote, author=author, year=year)
     q.save()
 
     return redirect('/quotes/')
