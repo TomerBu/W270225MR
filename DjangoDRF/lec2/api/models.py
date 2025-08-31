@@ -17,6 +17,7 @@ class Address(models.Model):
 class Store(models.Model):
     name = models.CharField(max_length=100)
     address = models.OneToOneField(Address, on_delete=models.CASCADE)
+    suppliers = models.ManyToManyField("Supplier", blank=True)
 
     def __str__(self):
         return f"{self.name} - {self.address.city}, {self.address.street}"
