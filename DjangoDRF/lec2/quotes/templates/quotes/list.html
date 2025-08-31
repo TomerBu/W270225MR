@@ -4,6 +4,7 @@
   Quotes
 {% endblock %}
 
+
 {% block content %}
   <h1>Quotes List</h1>
   <table class="table table-striped table-bordered">
@@ -11,6 +12,7 @@
       <th>Quote</th>
       <th>Author</th>
       <th>Year</th>
+      <th>Actions</th>
     </tr>
 
     {% for quote in quotes %}
@@ -18,6 +20,10 @@
         <td>{{ quote.quote }}</td>
         <td>{{ quote.author }}</td>
         <td>{{ quote.year }}</td>
+        <td>
+          <a href="{% url "delete_quote" quote.id %}">Delete</a> |
+          <a href="{% url "edit_quote" quote.id %}">Edit</a>
+        </td>
       </tr>
     {% endfor %}
   </table>
