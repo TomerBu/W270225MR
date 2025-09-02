@@ -20,3 +20,14 @@ def index(request: Request):
     students = Student.objects.all()
     serializer = StudentSerializer(students, many=True)
     return Response({'students': serializer.data})
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def details(request: Request, id: int):
+
+    if request.method == "GET":
+        student = Student.objects.get(id=id)
+        serializer = StudentSerializer(student)
+        return Response(serializer.data)
+    
+    return Response("TODO: complete this")
