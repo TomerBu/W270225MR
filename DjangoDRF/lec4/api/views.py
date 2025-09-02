@@ -24,6 +24,26 @@ class KittensView(APIView):
         return Response({"errors": kitten.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
+class KittensDetailView(APIView):
+    def get(self, request, id: int):
+        kitten = Kitten.objects.get(id=id)
+        serializer = KittenSerializer(kitten)
+        return Response({"kitten": serializer.data})
+
+    def put(self, request, id: int):
+        kitten = Kitten.objects.get(id=id)
+        serializer = KittenSerializer(kitten, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"kitten": serializer.data})
+        return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, id: int):
+        kitten = Kitten.objects.get(id=id)
+        kitten.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+   
 @api_view(['GET', 'POST'])
 def index(request: Request):
     if request.method == 'POST':
