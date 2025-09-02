@@ -36,4 +36,13 @@ def details(request: Request, id: int):
         student.delete()
         return Response({'message': 'deleted'}, status=status.HTTP_200_OK)
 
-    return Response("TODO: complete this")
+    if request.method == "PUT":
+        student = Student.objects.get(id=id)
+        serializer = StudentSerializer(student, request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
