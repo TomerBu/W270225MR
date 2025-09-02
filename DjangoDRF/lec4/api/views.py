@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -29,5 +30,10 @@ def details(request: Request, id: int):
         student = Student.objects.get(id=id)
         serializer = StudentSerializer(student)
         return Response(serializer.data)
-    
+
+    if request.method == "DELETE":
+        student = Student.objects.get(id=id)
+        student.delete()
+        return Response({'message': 'deleted'}, status=status.HTTP_200_OK)
+
     return Response("TODO: complete this")
