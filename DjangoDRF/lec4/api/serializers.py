@@ -1,12 +1,20 @@
 from rest_framework import serializers
-from api.models import Student
+from api.models import Kitten, Student
 from django.core.validators import MinValueValidator, MaxValueValidator
+
+class KittenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kitten
+        fields = ['id', 'name', 'breed']
+        # fields = '__all__'
+        # exclude = ['id']
 
 
 class StudentSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
     age = serializers.IntegerField(
-        validators=[MinValueValidator(4), MaxValueValidator(120)])
+        validators=[MinValueValidator(4), MaxValueValidator(120)]
+    )
 
     def create(self, validated_data):
         return Student.objects.create(**validated_data)
