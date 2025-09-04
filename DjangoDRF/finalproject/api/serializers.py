@@ -35,3 +35,4 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
+        # fields = '__all__'
