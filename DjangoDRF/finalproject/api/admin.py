@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from api.models import Tag, UserProfile
+from api.models import Tag, UserProfile, Comment, Post, PostUserLikes
 
 # each time we add a model:
-admin.site.register([UserProfile, Tag])
+admin.site.register([UserProfile, Tag, Comment, Post, PostUserLikes])
 
 # python manage.py makemigrations api
 # python manage.py migrate api
