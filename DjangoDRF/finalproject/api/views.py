@@ -5,6 +5,61 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
+from rest_framework.permissions import AllowAny
+from rest_framework.viewsets import ViewSet
+from rest_framework.decorators import action
+
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from api.auth import get_jwt
+
+from rest_framework.response import Response
+from rest_framework import status
+
+
+class AuthViewSet(ViewSet):
+    queryset = User.objects.all()
+    serializer_class = AuthTokenSerializer
+    permission_classes = [AllowAny]
+
+    def list(self, request):
+        return Response({
+            "login": 'http://localhost:8000/api/auth/login/',
+            "register": 'http://localhost:8000/api/auth/register/'
+        })
+
+    @action(detail=False, methods=['post', 'get'])
+    def login(self, request):
+        serializer = AuthTokenSerializer(
+            data=request.data, context={'request': request}
+        )
+
+        serializer.is_valid(raise_exception=True)  # 401
+
+        user = serializer.validated_data['user']
+        jwt = get_jwt(user)
+        return Response(jwt)
+
+    @action(detail=False, methods=['post', 'get'])
+    def register(self, request):
+        serializer = UserSerializer(
+            data=request.data
+        )
+
+        serializer.is_valid(raise_exception=True)  # 401
+        # saves the user and returns the user instance
+        user = serializer.save()
+
+        jwt = get_jwt(user)
+
+        return Response(
+            {
+                "message": "User registered successfully",
+                **jwt,
+                "user": serializer.data
+            }, status=status.HTTP_201_CREATED
+        )
+
+
 class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
