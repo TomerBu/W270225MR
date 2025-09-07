@@ -1,3 +1,5 @@
+from rest_framework import serializers
+from django.core.validators import RegexValidator
 from api.models import Post, UserProfile, Tag, PostUserLikes, Comment
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
@@ -35,18 +37,21 @@ class PostUserLikesSerializer(ModelSerializer):
         model = PostUserLikes
         fields = '__all__'
 
-from rest_framework import serializers
-from django.core.validators import RegexValidator
 
 class UserSerializer(ModelSerializer):
     password = serializers.CharField(
-        validators = [
+        validators=[
             RegexValidator(
                 regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$',
                 message="Password must be at least 8 characters long and contain at least one letter and one number."
             )
         ]
     )
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'password']
