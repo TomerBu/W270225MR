@@ -45,12 +45,25 @@ class UserSerializer(ModelSerializer):
                 regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$',
                 message="Password must be at least 8 characters long and contain at least one letter and one number."
             )
-        ]
+        ], 
+        write_only=True
     )
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+    
+    def update(self, instance, validated_data):
+        # remove the password from the dictionary
+        password = validated_data.pop('password', None)
+
+        # iterate over the dict and set the attributes of the user instance
+        for key, value in validated_data.items():
+            setattr(instance, key, value)
+
+        instance.set_password(password)
+        instance.save()
+        return instance
 
     class Meta:
         model = User
