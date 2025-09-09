@@ -70,7 +70,7 @@ class TagViewSet(ModelViewSet):
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter, SearchFilter
-
+from rest_framework.pagination import PageNumberPagination
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -81,6 +81,9 @@ class PostViewSet(ModelViewSet):
 
     search_fields = ['title', 'text']
     ordering_fields = ['title', 'created_at']
+    ordering = ['-created_at']
+
+    pagination_class = PageNumberPagination
 
 
 
