@@ -4,7 +4,12 @@ from api.models import Post, UserProfile, Tag, PostUserLikes, Comment
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
 
-# json + create/update + validations
+
+class CurrentProfileDefault:
+    requires_context = True
+
+    def __call__(self, serializer_field):
+        return serializer_field.context['request'].user.userprofile
 
 
 class UserProfileSerializer(ModelSerializer):
@@ -21,38 +26,70 @@ class TagSerializer(ModelSerializer):
 
 
 class PostSerializer(ModelSerializer):
+    author = serializers.HiddenField(
+        default=CurrentProfileDefault()
+    )
+    author_id = serializers.SerializerMethodField()
+
     class Meta:
         model = Post
         fields = '__all__'
 
+    def get_author_id(self, obj):
+        return obj.author.id
+
 
 class CommentSerializer(ModelSerializer):
+    author = serializers.HiddenField(
+        default=CurrentProfileDefault()
+    )
+    author_id = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
         fields = '__all__'
 
+    def get_author_id(self, obj):
+        return obj.author.id
+
 
 class PostUserLikesSerializer(ModelSerializer):
+    user = serializers.HiddenField(
+        default=CurrentProfileDefault()
+    )
+    user_id = serializers.SerializerMethodField()
+
     class Meta:
         model = PostUserLikes
         fields = '__all__'
 
+    def get_user_id(self, obj):
+        return obj.user.id
+
 
 class UserSerializer(ModelSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+    user_id = serializers.SerializerMethodField('get_user_id')
+    # 
     password = serializers.CharField(
         validators=[
             RegexValidator(
                 regex=r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$',
                 message="Password must be at least 8 characters long and contain at least one letter and one number."
             )
-        ], 
+        ],
         write_only=True
     )
+
+    def get_user_id(self, obj):
+        return obj.user.id
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
-    
+
     def update(self, instance, validated_data):
         # remove the password from the dictionary
         password = validated_data.pop('password', None)
