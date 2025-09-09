@@ -72,7 +72,7 @@ class UserSerializer(ModelSerializer):
         default=serializers.CurrentUserDefault()
     )
     user_id = serializers.SerializerMethodField('get_user_id')
-    # 
+ 
     password = serializers.CharField(
         validators=[
             RegexValidator(
@@ -84,7 +84,7 @@ class UserSerializer(ModelSerializer):
     )
 
     def get_user_id(self, obj):
-        return obj.user.id
+        return obj.id
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
@@ -104,5 +104,5 @@ class UserSerializer(ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password']
+        fields = ['id', 'username', 'email', 'password', 'user_id', 'user']
         extra_kwargs = {'password': {'write_only': True}}

@@ -59,17 +59,29 @@ class AuthViewSet(ViewSet):
             }, status=status.HTTP_201_CREATED
         )
 
-
+from api.throttles import MyRateThrottle
 class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = [TagsPermission]
+    throttle_classes = [MyRateThrottle]
 
+
+
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter, SearchFilter
 
 class PostViewSet(ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [PostsPermission]
+    
+    filter_backends = [DjangoFilterBackend, OrderingFilter, SearchFilter]
+    filterset_fields = ['title', 'text', 'author_id']
+
+    search_fields = ['title', 'text']
+    ordering_fields = ['title', 'created_at']
+
 
 
 class CommentViewSet(ModelViewSet):
