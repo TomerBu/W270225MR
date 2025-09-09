@@ -1,6 +1,62 @@
-<hr>
+# שכפול הפרויקט קיים מ-GitHub
 
-# מדריך הקמת פרויקט Django חדש
+### 1. שכפול הפרויקט
+```bash
+git clone https://github.com/TomerBu/W270225MR
+cd ./DjangoDRF/finalproject
+```
+
+### 2. יצירת סביבה וירטואלית
+```bash
+python -m venv myenv
+```
+
+או עם Mac:
+```bash
+python3 -m venv myenv
+```
+
+### 3. הפעלת הסביבה הוירטואלית
+
+**ב-Windows:**
+```bash
+myenv\Scripts\activate
+```
+
+**ב-macOS/Linux:**
+```bash
+source myenv/bin/activate
+```
+
+### 4. התקנת הדרישות מקובץ requirements.txt
+```bash
+pip install -r requirements.txt
+```
+
+### 5. העתקה והגדרת קובץ .env
+```bash
+cp example.env .env
+```
+
+לאחר מכן ערוך את הקובץ .env ושנה את הסיסמאות והמפתחות הסודיים שלך.
+
+### 6. הרצת מיגרציות
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### 7. יצירת משתמש מנהל
+```bash
+python manage.py createsuperuser
+```
+
+### 8. הרצת השרת
+```bash
+python manage.py runserver
+```
+
+---
 
 ## התקנה ראשונית (פעם אחת במחשב)
 
@@ -161,43 +217,6 @@ deactivate
 
 ---
 
-## טיפים חשובים
-
-1. **תמיד הקפד להפעיל את הסביבה הוירטואלית** לפני עבודה על הפרויקט
-2. **שמור את הדרישות** בקובץ requirements.txt:
-   ```bash
-   pip freeze > requirements.txt
-   ```
-3. **התקנת דרישות** מקובץ requirements.txt:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. **הוסף את תיקיית myenv ל-.gitignore** כדי לא להעלות אותה ל-Git
-
----
-
-## דוגמה מלאה
-```bash
-# יצירת פרויקט חדש
-django-admin startproject blog_project
-cd blog_project
-
-# יצירת סביבה וירטואלית
-python -m venv myenv
-
-# הפעלת הסביבה (Windows)
-myenv\Scripts\activate
-
-# התקנת Django
-pip install django
-
-# הרצת השרת
-python manage.py runserver
-```
-
-
----
-
 ## הקפאה ושחזור של ספריות (requirements)
 
 ### הקפאת הספריות לקובץ requirements.txt
@@ -211,3 +230,9 @@ pip freeze > requirements.txt
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+## טיפים חשובים
+
+1. **תמיד הקפד להפעיל את הסביבה הוירטואלית** לפני עבודה על הפ
